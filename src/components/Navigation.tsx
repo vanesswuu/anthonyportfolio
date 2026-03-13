@@ -81,7 +81,7 @@ export default function Navigation({ isLightMode, onToggleTheme }: NavigationPro
           ref={el => linkRefs.current[0] = el as any}
           className="text-xl font-bold tracking-tighter uppercase font-heading cursor-pointer z-50 mix-blend-difference"
         >
-          Anthony Leuterio
+          Anthony <span className="text-accent">Leuterio</span>
         </div>
 
         <div className="hidden xl:flex gap-8 items-center text-[10px] font-bold tracking-[0.2em] uppercase z-50 mix-blend-difference">
