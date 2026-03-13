@@ -27,13 +27,13 @@ export default function Contact() {
         {/* Social & Legal */}
         <div className="flex flex-col justify-between gap-8">
            <div className="flex gap-6">
-              <a href="#" className="p-3 border border-neutral-800 rounded-full hover:bg-white hover:text-black transition-all duration-300">
+              <a href="https://www.linkedin.com/in/tonleuterio/" target="_blank" rel="noopener noreferrer" className="p-3 border border-neutral-800 rounded-full hover:bg-white hover:text-black transition-all duration-300">
                  <Linkedin size={20} />
               </a>
-              <a href="#" className="p-3 border border-neutral-800 rounded-full hover:bg-white hover:text-black transition-all duration-300">
+              <a href="https://www.facebook.com/TonLeuterioOfficial" target="_blank" rel="noopener noreferrer" className="p-3 border border-neutral-800 rounded-full hover:bg-white hover:text-black transition-all duration-300">
                  <Facebook size={20} />
               </a>
-              <a href="#" className="p-3 border border-neutral-800 rounded-full hover:bg-white hover:text-black transition-all duration-300">
+              <a href="https://x.com/leuteriorealty" target="_blank" rel="noopener noreferrer" className="p-3 border border-neutral-800 rounded-full hover:bg-white hover:text-black transition-all duration-300">
                  <Twitter size={20} />
               </a>
            </div>
