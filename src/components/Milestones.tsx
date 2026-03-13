@@ -37,7 +37,7 @@ export default function Milestones() {
   }, []);
 
   return (
-    <section ref={containerRef} className="h-screen bg-neutral-950 overflow-hidden flex items-center">
+    <section ref={containerRef} id="milestones" className="h-screen bg-neutral-950 overflow-hidden flex items-center">
       <div ref={scrollRef} className="flex gap-32 px-[10vw] whitespace-nowrap items-center">
         
         <div className="flex flex-col gap-4 max-w-lg min-w-[30vw]">

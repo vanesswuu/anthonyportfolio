@@ -46,6 +46,7 @@
   --noise-opacity: 0.05;
   --noise-invert: 0;
   --hover-bg: rgba(255, 255, 255, 0.05);
+  --press-hover-text: #ffffff;
 }
 
 body.light-mode {
@@ -70,6 +71,7 @@ body.light-mode {
   --hero-img-opacity: 0.8;
   --overlay-gradient: linear-gradient(to top, rgba(255, 255, 255, 0.9), transparent);
   --hover-bg: rgba(0, 0, 0, 0.03);
+  --press-hover-text: #0a0a0a;
   --border-color: rgba(0, 0, 0, 0.06);
   --noise-opacity: 0.02;
   --noise-invert: 1;

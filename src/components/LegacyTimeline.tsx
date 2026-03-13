@@ -64,7 +64,7 @@ export default function LegacyTimeline() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-64 px-6 bg-black text-white relative overflow-hidden">
+    <section ref={containerRef} id="legacy" className="py-64 px-6 bg-black text-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto text-center mb-32">
         <span className="text-accent text-[10px] tracking-[0.6em] uppercase font-bold mb-6 block">The Journey</span>
         <h2 className="font-heading text-6xl md:text-9xl font-bold tracking-tighter">THE <span className="text-neutral-500 italic font-accent font-normal text-7xl md:text-[120px]">LEGACY</span></h2>

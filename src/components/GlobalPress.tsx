@@ -8,27 +8,27 @@ gsap.registerPlugin(ScrollTrigger);
 const news = [
   {
     source: "Philippine Inquirer",
-    title: "Leuterio named first Filipino International Realtor of the Year",
+    title: "Filipino Homes’ Leuterio is 2024 International Realtor of the Year",
     date: "Nov 2024",
-    link: "#"
-  },
-  {
-    source: "SunStar Cebu",
-    title: "Pioneering the Digital Transformation of PH Real Estate",
-    date: "Aug 2024",
-    link: "#"
-  },
-  {
-    source: "NAR Global",
-    title: "Leadership Spotlight: Anthony Leuterio's Vision for Southeast Asia",
-    date: "Jan 2025",
-    link: "#"
+    link: "https://cebudailynews.inquirer.net/607441/filipino-homes-leuterio-is-2024-international-realtor-of-the-year"
   },
   {
     source: "Manila Bulletin",
-    title: "Filipino Homes: Scaling to 100 Offices Nationwide",
-    date: "May 2024",
-    link: "#"
+    title: "Filipino Homes expands to Dubai, unlocking new opportunities",
+    date: "June 2025",
+    link: "https://mb.com.ph/2025/6/6/filipino-homes-expands-to-dubai-unlocking-new-opportunities-for-investors-brokers"
+  },
+  {
+    source: "SunStar Cebu",
+    title: "Mismatched inventory 'drives' oversupply, not few buyers",
+    date: "Jan 2025",
+    link: "https://www.sunstar.com.ph/cebu/mismatched-inventory-drives-oversupply-not-few-buyers"
+  },
+  {
+    source: "Manila Bulletin",
+    title: "Filipino Homes founder earns UAE license",
+    date: "May 2025",
+    link: "https://mb.com.ph/2025/5/30/filipino-homes-founder-earns-uae-license"
   }
 ];
 
@@ -53,7 +53,7 @@ export default function GlobalPress() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-48 px-6 bg-black text-white relative border-t border-white/5">
+    <section ref={containerRef} id="press" className="py-48 px-6 bg-black text-white relative border-t border-white/5">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-end mb-24">
            <div>
@@ -67,7 +67,13 @@ export default function GlobalPress() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10">
           {news.map((item, i) => (
-            <a key={i} href={item.link} className="press-item group bg-black p-12 hover:bg-neutral-900 transition-all duration-500 relative overflow-hidden">
+            <a 
+              key={i} 
+              href={item.link} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="press-item group bg-black p-12 hover:bg-neutral-900 transition-all duration-500 relative overflow-hidden"
+            >
               <div className="flex justify-between items-start mb-12">
                 <span className="text-[10px] tracking-[0.3em] uppercase font-bold text-accent">
                   {item.source}
@@ -77,7 +83,12 @@ export default function GlobalPress() {
                 </span>
               </div>
               
-              <h3 className="font-heading text-2xl md:text-3xl font-bold leading-tight group-hover:text-white transition-colors">
+              <h3 
+                className="font-heading text-2xl md:text-3xl font-bold leading-tight transition-colors duration-500"
+                style={{ color: 'inherit' }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--press-hover-text)')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'inherit')}
+              >
                 {item.title}
               </h3>
 

@@ -60,6 +60,15 @@ export default function Navigation({ isLightMode, onToggleTheme }: NavigationPro
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  const navItems = [
+    { name: 'Vision', href: '#vision' },
+    { name: 'Impact', href: '#milestones' },
+    { name: 'Ventures', href: '#ventures' },
+    { name: 'Academic', href: '#leadership' },
+    { name: 'Legacy', href: '#legacy' },
+    { name: 'Press', href: '#press' },
+  ];
+
   return (
     <>
       <nav 
@@ -75,21 +84,20 @@ export default function Navigation({ isLightMode, onToggleTheme }: NavigationPro
           Anthony Leuterio
         </div>
 
-        <div className="hidden md:flex gap-10 items-center text-[10px] font-bold tracking-[0.2em] uppercase z-50 mix-blend-difference">
-          {['Vision', 'Ventures', 'Leadership'].map((item, i) => (
+        <div className="hidden xl:flex gap-8 items-center text-[10px] font-bold tracking-[0.2em] uppercase z-50 mix-blend-difference">
+          {navItems.map((item, i) => (
             <a 
-              key={item}
-              href={`#${item.toLowerCase()}`} 
+              key={item.name}
+              href={item.href} 
               ref={el => linkRefs.current[i+1] = el as any}
               className="hover:opacity-60 transition-opacity"
             >
-              {item}
+              {item.name}
             </a>
           ))}
           
-          {/* Classy Theme Toggle Button */}
           <button 
-            ref={el => linkRefs.current[4] = el as any}
+            ref={el => linkRefs.current[navItems.length + 1] = el as any}
             onClick={onToggleTheme}
             className="p-2 transition-transform hover:scale-110 active:scale-90 cursor-pointer"
             aria-label="Toggle Theme"
@@ -106,14 +114,14 @@ export default function Navigation({ isLightMode, onToggleTheme }: NavigationPro
 
           <a 
             href="#contact" 
-            ref={el => linkRefs.current[5] = el as any}
+            ref={el => linkRefs.current[navItems.length + 2] = el as any}
             className="px-8 py-3 border border-white/20 rounded-full hover:bg-white hover:text-black transition-all duration-500 text-[10px] tracking-[0.2em]"
           >
             Get in Touch
           </a>
         </div>
 
-        <div className="flex items-center gap-6 md:hidden z-50 mix-blend-difference">
+        <div className="flex items-center gap-6 xl:hidden z-50 mix-blend-difference">
           <button onClick={onToggleTheme} className="p-2">
             {isLightMode ? <Moon size={20} /> : <Sun size={20} className="text-accent" />}
           </button>
@@ -125,12 +133,13 @@ export default function Navigation({ isLightMode, onToggleTheme }: NavigationPro
 
       {/* Mobile Menu Overlay */}
       <div className={`fixed inset-0 bg-black z-40 transition-transform duration-700 cubic-bezier(0.7, 0, 0.3, 1) flex items-center justify-center ${isOpen ? 'translate-y-0' : '-translate-y-full'}`}>
-        <div className="flex flex-col gap-12 text-center text-4xl font-heading font-bold uppercase tracking-tighter text-white">
-           {['Vision', 'Ventures', 'Leadership', 'Contact'].map((item) => (
-             <a key={item} href={`#${item.toLowerCase()}`} onClick={toggleMenu} className="hover:text-accent transition-colors">
-               {item}
+        <div className="flex flex-col gap-8 text-center text-3xl font-heading font-bold uppercase tracking-tighter text-white">
+           {navItems.map((item) => (
+             <a key={item.name} href={item.href} onClick={toggleMenu} className="hover:text-accent transition-colors">
+               {item.name}
              </a>
            ))}
+           <a href="#contact" onClick={toggleMenu} className="hover:text-accent transition-colors">Contact</a>
         </div>
       </div>
     </>
