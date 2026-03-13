@@ -91,7 +91,7 @@ export default function Accolade() {
         {/* Parallax Image Holder */}
         <div ref={imageRef} className="relative w-full aspect-[4/5] bg-neutral-800 overflow-hidden group">
            <div className="inner-image absolute inset-0 w-full h-full bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center grayscale hover:grayscale-0 transition-all duration-1000 opacity-60 group-hover:opacity-100" />
-           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+           <div className="absolute inset-0 transition-all duration-1000 opacity-60" style={{ background: 'var(--overlay-gradient)' }} />
            
            <div className="absolute bottom-12 left-12 right-12 translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700">
               <span className="text-[10px] text-accent uppercase tracking-[0.4em] font-bold block mb-2">Visual Insight</span>

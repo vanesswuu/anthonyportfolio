@@ -76,9 +76,16 @@ export default function Ventures() {
           {ventures.map((venture) => (
             <div 
               key={venture.id}
-              className="venture-item group relative py-12 md:py-20 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between cursor-pointer transition-colors hover:bg-white/5 px-4"
-              onMouseEnter={() => setActiveImage(venture.image)}
-              onMouseLeave={() => setActiveImage(null)}
+              className="venture-item group relative py-12 md:py-20 border-b border-white/10 flex flex-col md:flex-row md:items-center justify-between cursor-pointer transition-colors px-4"
+              style={{ backgroundColor: 'transparent' }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--hover-bg)';
+                setActiveImage(venture.image);
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                setActiveImage(null);
+              }}
             >
               <div className="flex items-center gap-8 md:gap-16 z-10">
                 <span className="font-mono text-sm text-neutral-600 group-hover:text-accent transition-colors">

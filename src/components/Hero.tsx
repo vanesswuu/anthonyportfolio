@@ -70,14 +70,15 @@ export default function Hero() {
     <section ref={containerRef} id="vision" className="relative h-screen flex flex-col justify-center items-center px-6 overflow-hidden bg-black text-white">
       {/* Dynamic Background */}
       <div ref={bgRef} className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/10 via-black/60 to-black z-10" />
+        <div className="absolute inset-0 z-10 hero-overlay transition-colors duration-700" />
         
         {/* Anthony Leuterio Portrait Layer */}
         <div className="absolute inset-0 w-full h-full">
            <img 
              src="https://scontent.fceb6-1.fna.fbcdn.net/v/t39.30808-6/441209467_985564119828185_6818980372920800446_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=PKPI2du-xTUQ7kNvwFfhu48&_nc_oc=AdkqQxh7XmYPGNhNgutHRMCxVQ9phE1Vp_Q0uCRnhd50NyLyf0A_NiS_WNgGgh6_Ei8&_nc_zt=23&_nc_ht=scontent.fceb6-1.fna&_nc_gid=JFIYgupNgsVpFcJdlI1AGA&_nc_ss=8&oh=00_AfymGznTMpuiPF4JxZDCe91FJWxe6T2aqu1K_Arf_goBRQ&oe=69B8B65C" 
              alt="Anthony Leuterio"
-             className="w-full h-full object-cover object-[center_20%] grayscale opacity-40 scale-105 transition-transform duration-1000"
+             className="w-full h-full object-cover object-[center_20%] grayscale transition-all duration-1000"
+             style={{ opacity: 'var(--hero-img-opacity)' }}
            />
         </div>
 

@@ -18,6 +18,15 @@ import { useState } from 'react';
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [isLightMode, setIsLightMode] = useState(false);
+
+  useEffect(() => {
+    if (isLightMode) {
+      document.body.classList.add('light-mode');
+    } else {
+      document.body.classList.remove('light-mode');
+    }
+  }, [isLightMode]);
 
   useEffect(() => {
     if (loading) return;
@@ -57,10 +66,10 @@ function App() {
   }, [loading]);
 
   return (
-    <div className="app-container bg-black min-h-screen text-white">
+    <div className="app-container min-h-screen">
       {loading && <Preloader onComplete={() => setLoading(false)} />}
       <CustomCursor />
-      <Navigation />
+      <Navigation isLightMode={isLightMode} onToggleTheme={() => setIsLightMode(!isLightMode)} />
       
       <main>
         <Hero />
