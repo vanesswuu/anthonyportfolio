@@ -1,84 +1,56 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { ArrowDown } from 'lucide-react';
+import { ArrowRight, Star, Users, Trophy, TrendingUp } from 'lucide-react';
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const headlineRef = useRef<HTMLHeadingElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Reveal sub-elements only (Name is now visible immediately)
       const tl = gsap.timeline();
       
-      tl.from(".hero-sub", {
+      tl.from(".hero-content", {
         opacity: 0,
-        y: 30,
-        duration: 1.5,
-        ease: "power3.out",
-        delay: 0.5
+        x: -50,
+        duration: 1,
+        ease: "power3.out"
       })
-      .from(".scroll-indicator", {
+      .from(".hero-image-container", {
         opacity: 0,
-        duration: 1
-      }, "-=0.5");
-
-      // Scroll scaling effect
-      gsap.to(".headline-container", {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true
-        },
         scale: 0.9,
-        opacity: 0.5,
-        y: -50
-      });
+        duration: 1.5,
+        ease: "power2.out"
+      }, "-=0.5")
+      .from(".floating-card", {
+        opacity: 0,
+        y: 20,
+        stagger: 0.2,
+        duration: 0.8,
+        ease: "back.out(1.7)"
+      }, "-=1");
 
-      // Advanced Parallax
+      // Floating Animation for Cards
+      gsap.to(".card-1", { y: -15, duration: 3, repeat: -1, yoyo: true, ease: "sine.inOut" });
+      gsap.to(".card-2", { y: 15, duration: 4, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 0.5 });
+      gsap.to(".card-3", { y: -10, duration: 3.5, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 1 });
+      gsap.to(".card-4", { y: 12, duration: 4.5, repeat: -1, yoyo: true, ease: "sine.inOut", delay: 0.2 });
+
+      // Parallax effect on mouse move
       const handleMouseMove = (e: MouseEvent) => {
         const { clientX, clientY } = e;
         const xPos = (clientX / window.innerWidth - 0.5);
         const yPos = (clientY / window.innerHeight - 0.5);
 
-        gsap.to(".word-1", {
-          x: xPos * 60,
-          y: yPos * 30,
-          duration: 1.2,
-          ease: "power2.out"
-        });
-
-        gsap.to(".word-2", {
-          x: xPos * -40,
-          y: yPos * -20,
-          duration: 1.5,
+        gsap.to(".hero-image-container", {
+          x: xPos * 20,
+          y: yPos * 10,
+          duration: 1,
           ease: "power2.out"
         });
       };
 
       window.addEventListener('mousemove', handleMouseMove);
-
-      // Accelerated & Smoother "Living" Loop
-      gsap.to(".word-1", {
-        yPercent: 5,
-        xPercent: 2,
-        duration: 2.5, // Faster (was 4)
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true
-      });
-
-      gsap.to(".word-2", {
-        yPercent: -5,
-        xPercent: -2,
-        duration: 3, // Faster (was 5)
-        ease: "sine.inOut",
-        repeat: -1,
-        yoyo: true
-      });
-
       return () => window.removeEventListener('mousemove', handleMouseMove);
 
     }, containerRef);
@@ -86,61 +58,102 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
-  const splitText = (text: string) => {
-    return text.split("").map((char, i) => (
-      <span key={i} className="char inline-block">
-        {char === " " ? "\u00A0" : char}
-      </span>
-    ));
-  };
-
   return (
-    <section ref={containerRef} id="vision" className="relative h-screen flex flex-col justify-center items-center px-6 overflow-hidden bg-black text-white">
-      {/* Dynamic Background */}
-      <div ref={bgRef} className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute inset-0 z-10 hero-overlay transition-colors duration-700" />
-        
-        {/* Anthony Leuterio Portrait Layer */}
-        <div className="absolute inset-0 w-full h-full">
-           <img 
-             src="https://scontent.fceb6-1.fna.fbcdn.net/v/t39.30808-6/441209467_985564119828185_6818980372920800446_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=PKPI2du-xTUQ7kNvwFfhu48&_nc_oc=AdkqQxh7XmYPGNhNgutHRMCxVQ9phE1Vp_Q0uCRnhd50NyLyf0A_NiS_WNgGgh6_Ei8&_nc_zt=23&_nc_ht=scontent.fceb6-1.fna&_nc_gid=JFIYgupNgsVpFcJdlI1AGA&_nc_ss=8&oh=00_AfymGznTMpuiPF4JxZDCe91FJWxe6T2aqu1K_Arf_goBRQ&oe=69B8B65C" 
-             alt="Anthony Leuterio"
-             className="w-full h-full object-cover object-[center_20%] grayscale transition-all duration-1000"
-             style={{ opacity: 'var(--hero-img-opacity)' }}
-           />
-        </div>
+    <section ref={containerRef} id="vision" className="relative min-h-screen flex items-center px-6 md:px-12 lg:px-24 overflow-hidden bg-[var(--bg-color)] text-[var(--text-color)] pt-20 transition-colors duration-1000">
+      {/* Background Elements */}
+      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-accent/10 blur-[120px] rounded-full" />
+      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-accent/5 blur-[120px] rounded-full" />
 
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/5 blur-[120px] animate-pulse-slow" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neutral-500/5 blur-[120px] animate-pulse-slow delay-1000" />
-      </div>
-
-      <div className="z-20 text-center flex flex-col gap-8 max-w-[90vw] headline-container">
-        <h1 className="font-heading text-[12vw] md:text-[8vw] lg:text-[10vw] font-bold tracking-tighter leading-[0.85] mix-blend-difference select-none">
-          <span className="block word-1 overflow-hidden">
-            {splitText("ANTHONY")}
-          </span>
-          <span className="block word-2 overflow-hidden text-neutral-500">
-            {splitText("LEUTERIO")}
-          </span>
-        </h1>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10 w-full max-w-7xl mx-auto">
         
-        <div className="hero-sub flex flex-col items-center gap-6">
-          <p className="font-body text-xs md:text-sm text-neutral-500 tracking-[0.4em] uppercase font-bold">
+        {/* Left: Text Content */}
+        <div className="hero-content space-y-8 text-left order-2 lg:order-1">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--hover-bg)] border border-[var(--border-color)] text-accent text-xs font-bold tracking-widest uppercase">
+            <Star size={14} fill="currentColor" />
             2024 International Realtor of the Year
+          </div>
+          
+          <h1 className="font-heading text-6xl md:text-8xl lg:text-[7vw] font-black tracking-tighter leading-[0.9] text-[var(--text-color)]">
+            SCALE YOUR <br />
+            <span className="text-accent italic">LEGACY.</span>
+          </h1>
+          
+          <p className="font-body text-[var(--n-500)] text-lg md:text-xl max-w-lg leading-relaxed">
+            Empowering <span className="text-[var(--text-color)] font-bold">14,000+ professionals</span> to dominate the real estate industry through visionary coaching and strategic innovation.
           </p>
-          <div className="h-[1px] w-24 bg-accent/30" />
-          <p className="text-neutral-400 font-accent italic text-xl md:text-2xl max-w-xl text-center font-normal">
-            Redefining the architecture of real estate globally.
-          </p>
+          
+          <div className="flex flex-wrap gap-4 pt-4">
+            <button className="px-8 py-4 bg-accent text-white rounded-full font-bold uppercase tracking-widest text-xs hover:bg-orange-600 transition-all duration-300 shadow-xl shadow-accent/20 flex items-center gap-3 group">
+              Get Started <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+            <button className="px-8 py-4 border border-[var(--border-color)] text-[var(--text-color)] rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] transition-all duration-300">
+              Watch Strategy
+            </button>
+          </div>
         </div>
+
+        {/* Right: Image & Floating Cards */}
+        <div className="relative order-1 lg:order-2 flex justify-center lg:justify-end">
+          <div className="hero-image-container relative w-full max-w-md lg:max-w-xl aspect-[4/5] rounded-[3rem] overflow-hidden border border-[var(--border-color)] shadow-2xl">
+            <img 
+              src="https://i.imgur.com/3sHH6fM.png" 
+              alt="Anthony Leuterio"
+              className="w-full h-full object-cover object-[center_20%] transition-opacity duration-1000"
+              style={{ opacity: 'var(--hero-img-opacity)' }}
+            />
+          </div>
+
+          {/* Floating Skill/Stat Cards */}
+          <div className="floating-card card-1 absolute -top-4 -right-4 md:right-0 bg-[var(--bg-color)]/80 backdrop-blur-xl p-4 rounded-2xl border border-[var(--border-color)] shadow-2xl z-20">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-accent/20 text-accent">
+                <Users size={20} />
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-widest font-bold text-[var(--n-500)]">Network</div>
+                <div className="text-lg font-black text-[var(--text-color)] leading-tight">14K+ PROS</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="floating-card card-2 absolute bottom-20 -left-6 md:-left-12 bg-[var(--bg-color)]/80 backdrop-blur-xl p-4 rounded-2xl border border-[var(--border-color)] shadow-2xl z-20">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-green-500/20 text-green-400">
+                <TrendingUp size={20} />
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-widest font-bold text-[var(--n-500)]">Impact</div>
+                <div className="text-lg font-black text-[var(--text-color)] leading-tight">GLOBAL SCALE</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="floating-card card-3 absolute top-1/2 -right-10 hidden md:block bg-[var(--bg-color)]/80 backdrop-blur-xl p-4 rounded-2xl border border-[var(--border-color)] shadow-2xl z-20">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-yellow-500/20 text-yellow-400">
+                <Trophy size={20} />
+              </div>
+              <div>
+                <div className="text-[10px] uppercase tracking-widest font-bold text-[var(--n-500)]">Authority</div>
+                <div className="text-lg font-black text-[var(--text-color)] leading-tight">PREMIER COACH</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="floating-card card-4 absolute -bottom-4 right-1/4 bg-accent p-1 px-4 rounded-full shadow-2xl z-20">
+             <span className="text-[10px] font-black uppercase tracking-tighter text-white">#1 Real Estate Mentor</span>
+          </div>
+        </div>
+
+
       </div>
 
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 scroll-indicator">
-        <div className="flex flex-col items-center gap-4 group cursor-pointer">
-          <div className="w-[1px] h-12 bg-gradient-to-b from-accent to-transparent origin-top transform group-hover:scale-y-150 transition-transform duration-500" />
-          <span className="text-[10px] uppercase tracking-[0.3em] text-neutral-600 group-hover:text-accent transition-colors">Scroll</span>
-        </div>
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
+        <div className="w-[1px] h-12 bg-gradient-to-b from-accent to-transparent" />
+        <span className="text-[8px] uppercase tracking-[0.4em]">Explore</span>
       </div>
     </section>
   );
 }
+
