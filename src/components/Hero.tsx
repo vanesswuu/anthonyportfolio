@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ArrowRight, Star, Users, Trophy, TrendingUp } from 'lucide-react';
+import heroVid from './imgs/hero_vid.mp4';
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -92,13 +93,16 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right: Image & Floating Cards */}
+        {/* Right: Video & Floating Cards */}
         <div className="relative order-1 lg:order-2 flex justify-center lg:justify-end">
-          <div className="hero-image-container relative w-full max-w-md lg:max-w-xl aspect-[4/5] rounded-[3rem] overflow-hidden border border-[var(--border-color)] shadow-2xl">
-            <img 
-              src="https://i.imgur.com/3sHH6fM.png" 
-              alt="Anthony Leuterio"
-              className="w-full h-full object-cover object-[center_20%] transition-opacity duration-1000"
+          <div className="hero-image-container relative w-full max-w-md lg:max-w-xl aspect-[4/5] rounded-[3rem] overflow-hidden border border-[var(--border-color)] shadow-2xl bg-black">
+            <video 
+              src={heroVid}
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-full object-cover transition-opacity duration-1000"
               style={{ opacity: 'var(--hero-img-opacity)' }}
             />
           </div>
