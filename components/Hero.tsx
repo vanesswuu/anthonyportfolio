@@ -72,24 +72,30 @@ export default function Hero() {
         <div className="hero-content space-y-8 text-left order-2 lg:order-1">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--hover-bg)] border border-[var(--border-color)] text-accent text-xs font-bold tracking-widest uppercase">
             <Star size={14} fill="currentColor" />
-            2024 International Realtor of the Year
+            International Realtor of the Year
           </div>
           
-          <h1 className="font-heading text-6xl md:text-8xl lg:text-[7vw] font-black tracking-tighter leading-[0.9] text-[var(--text-color)]">
-            SCALE YOUR <br />
-            <span className="text-accent italic">LEGACY.</span>
+          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[1.1] text-[var(--text-color)]">
+            SCALING <br />
+            <span className="text-accent italic">EXCELLENCE.</span>
           </h1>
           
           <p className="font-body text-[var(--n-500)] text-lg md:text-xl max-w-lg leading-relaxed">
-            Empowering <span className="text-[var(--text-color)] font-bold">14,000+ professionals</span> to dominate the real estate industry through visionary coaching and strategic innovation.
+            The Philippines' Premier Real Estate Mentor. Redefining property sales through <span className="text-[var(--text-color)] font-bold">master-level coaching</span> and global networking strategies.
           </p>
           
           <div className="flex flex-wrap gap-4 pt-4">
-            <button className="px-8 py-4 bg-accent text-white rounded-full font-bold uppercase tracking-widest text-xs hover:bg-orange-600 transition-all duration-300 shadow-xl shadow-accent/20 flex items-center gap-3 group">
-              Get Started <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            <button 
+              onClick={() => document.getElementById('consultation')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-8 py-4 bg-accent text-white rounded-full font-bold uppercase tracking-widest text-xs hover:bg-orange-600 transition-all duration-300 shadow-xl shadow-accent/20 flex items-center gap-3 group"
+            >
+              Start Coaching <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </button>
-            <button className="px-8 py-4 border border-[var(--border-color)] text-[var(--text-color)] rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] transition-all duration-300">
-              Watch Strategy
+            <button 
+              onClick={() => document.getElementById('programs')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-8 py-4 border border-[var(--border-color)] text-[var(--text-color)] rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] transition-all duration-300"
+            >
+              Explore Programs
             </button>
           </div>
         </div>

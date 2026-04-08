@@ -44,8 +44,8 @@ export default function Milestones() {
         
         <div className="flex flex-col gap-4 max-w-lg min-w-[30vw]">
           <span className="text-accent text-[10px] tracking-[0.5em] uppercase font-bold">The Impact</span>
-          <h2 className="font-heading text-6xl md:text-8xl font-bold tracking-tighter text-white">
-            SCALING <br/> <span className="text-neutral-500 italic font-accent font-normal">EXCELLENCE</span>
+          <h2 className="font-heading text-4xl md:text-6xl font-black tracking-tighter text-white uppercase leading-tight">
+            SCALING <br/> <span className="text-accent italic font-accent font-normal">EXCELLENCE</span>
           </h2>
         </div>
 

@@ -1,84 +1,172 @@
-'use client';
-
-import { useState } from 'react';
-import { supabase } from '@/lib/supabase';
+"use client";
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Lock, Mail, ArrowRight } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
+import gsap from 'gsap';
+import '../admin/admin.css';
 
-export default function LoginPage() {
+export default function Login() {
+  const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
+  const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+    
+    // GSAP Pop-up Animation
+    if (formRef.current) {
+      gsap.fromTo(formRef.current, 
+        { 
+          opacity: 0, 
+          scale: 0.8,
+          y: 20
+        }, 
+        { 
+          opacity: 1, 
+          scale: 1, 
+          y: 0,
+          duration: 0.8, 
+          ease: 'power4.out',
+          delay: 0.2
+        }
+      );
+    }
+    
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) {
+        router.push('/admin');
+      }
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        router.push('/admin');
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
+    setError('');
+    
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    
     if (error) {
       setError(error.message);
-      setLoading(false);
     } else {
       router.push('/admin');
     }
+    setLoading(false);
   };
 
-  return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-6 font-body">
-      <div className="w-full max-w-md space-y-12">
-        <div className="text-center">
-          <h1 className="text-4xl font-heading font-black uppercase tracking-tighter mb-4">
-            Admin <span className="text-accent italic font-accent lowercase font-normal">Access</span>
-          </h1>
-          <p className="text-neutral-400 font-bold uppercase tracking-widest text-[10px]">Secure Gateway for Anthony Leuterio Systems</p>
-        </div>
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setSuccess('');
 
-        <form onSubmit={handleLogin} className="space-y-6">
-          <div className="space-y-2">
-            <label className="text-[10px] uppercase tracking-widest font-black text-neutral-400 flex items-center gap-2">
-              <Mail size={12} /> Email Address
-            </label>
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
+    const { data, error } = await supabase.auth.signUp({ 
+      email, 
+      password,
+      options: {
+        data: { role: 'admin' }
+      }
+    });
+    
+    if (error) {
+      setError(error.message);
+    } else {
+      if (data.session) {
+        router.push('/admin');
+      } else {
+        setSuccess('Account created! Check your email to confirm, then sign in.');
+        setIsSignUp(false);
+      }
+      setPassword('');
+      setConfirmPassword('');
+    }
+    setLoading(false);
+  };
+
+  if (!mounted) return null;
+
+  return (
+    <div className="admin-body">
+      <div id="auth-section" className="admin-container">
+        <div ref={formRef} className="login-box">
+          <h2 style={{ marginBottom: '24px', textAlign: 'center', fontFamily: 'var(--serif)', fontSize: '28px' }}>
+            Admin <em>{isSignUp ? 'Sign Up' : 'Access'}</em>
+          </h2>
+          
+          {error && <div style={{ color: '#ff6b6b', marginBottom: '16px', fontSize: '14px', textAlign: 'center', background: 'rgba(255,0,0,0.1)', padding: '10px', borderRadius: '8px' }}>{error}</div>}
+          {success && <div style={{ color: '#4ade80', marginBottom: '16px', fontSize: '14px', textAlign: 'center', background: 'rgba(0,255,0,0.1)', padding: '10px', borderRadius: '8px' }}>{success}</div>}
+
+          <form onSubmit={isSignUp ? handleSignUp : handleLogin} className="admin-form" style={{ width: '100%' }}>
             <input 
               type="email" 
-              required
+              placeholder="Admin Email" 
+              required 
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-neutral-100 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-accent outline-none font-bold text-primary" 
-              placeholder="admin@anthonyleuterio.com" 
+              onChange={e => setEmail(e.target.value)}
             />
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-[10px] uppercase tracking-widest font-black text-neutral-400 flex items-center gap-2">
-              <Lock size={12} /> Password
-            </label>
             <input 
               type="password" 
-              required
+              placeholder="Password" 
+              required 
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-neutral-100 border-none rounded-2xl px-6 py-4 focus:ring-2 focus:ring-accent outline-none font-bold text-primary" 
-              placeholder="••••••••" 
+              onChange={e => setPassword(e.target.value)}
             />
-          </div>
+            {isSignUp && (
+              <input 
+                type="password" 
+                placeholder="Confirm Password" 
+                required 
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+              />
+            )}
+            
+            <button type="submit" className="big-btn" disabled={loading} style={{ border: 'none', cursor: 'pointer' }}>
+              {loading ? 'Authenticating...' : (isSignUp ? 'Create Admin Account' : 'Authenticate Server')}
+            </button>
 
-          {error && <p className="text-red-500 text-xs font-bold uppercase tracking-widest text-center">{error}</p>}
-
-          <button 
-            disabled={loading}
-            className="w-full py-6 bg-primary text-white rounded-full font-black uppercase tracking-widest text-xs hover:bg-accent transition-all duration-300 shadow-xl shadow-primary/20 flex items-center justify-center gap-4 group disabled:opacity-50"
-          >
-            {loading ? 'Authenticating...' : 'Enter Dashboard'}
-            <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
-          </button>
-        </form>
+            <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center' }}>
+              <button 
+                type="button" 
+                onClick={() => { setIsSignUp(!isSignUp); setError(''); setSuccess(''); }} 
+                className="text-link"
+                style={{ background: 'transparent', borderTop: 'none', borderLeft: 'none', borderRight: 'none', cursor: 'pointer' }}
+              >
+                {isSignUp ? 'Already have an account? Sign In' : 'Need an account? Sign Up'}
+              </button>
+              
+              <button 
+                type="button" 
+                onClick={() => router.push('/')} 
+                className="text-link"
+                style={{ background: 'transparent', borderTop: 'none', borderLeft: 'none', borderRight: 'none', cursor: 'pointer', opacity: 0.6 }}
+              >
+                ← Back to Homepage
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

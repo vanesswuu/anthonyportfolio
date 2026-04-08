@@ -15,7 +15,7 @@ export default function CoachingPrograms() {
 
   useEffect(() => {
     async function fetchPrograms() {
-      const { data } = await supabase.from('coaching_programs').select('*').order('created_at', { ascending: true });
+      const { data } = await supabase.from('coaching').select('*').order('created_at', { ascending: true });
       if (data && data.length > 0) {
         setPrograms(data);
       } else {
@@ -66,7 +66,7 @@ export default function CoachingPrograms() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-24">
           <span className="text-accent text-xs tracking-[0.5em] uppercase font-black block mb-4">The Curriculum</span>
-          <h2 className="font-heading text-6xl md:text-8xl font-black tracking-tighter uppercase leading-none text-white">Coaching <br/><span className="text-accent italic font-accent lowercase font-normal">Programs</span></h2>
+          <h2 className="font-heading text-4xl md:text-6xl font-black tracking-tighter uppercase leading-none text-white">Coaching <br/><span className="text-accent italic font-accent lowercase font-normal">Programs</span></h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
